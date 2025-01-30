@@ -1,0 +1,25 @@
+%% ----------------------------------------------------------------
+%% Conclusions.tex
+%% ---------------------------------------------------------------- 
+\chapter{Conclusions \& Proposal} \label{Chapter: Conclusions}
+
+\section{Conclusions}
+
+A Gantt Chart of all the work done is shown in \aref{Appendix:listing}, \fref{Figure:gantt}.
+Up to this point, the background of the LSTM model has been well-researched. The dataset has been found, and the data are well understood. 
+Several method to preprocess the data in temporal aspects has been go through, to reconstruct a better dataset fed into the model. 
+A simple LSTM model has been built, given a basic working skeleton of this project. 
+
+\section{Future Work}
+
+The chart also states the work not completed and planned to be done in the future.
+
+The deep learning library still needs to be more familiarized. It is the priority to have a better structure for the network 
+by altering the number of LSTM layers, batch sizes, and so on. These hyperparameters could be optimised using Bayesian optimisation. 
+
+The information on upstream and downstream has not been used for now, consider using spatio-temporal graph convolutional networks (STGCN) method \cite{DBLP:journals/corr/abs-1709-04875}\cite{8560205} to extract 
+traffic's spatial characteristics as well, to potentially reach better performance. Hence, further background research on Bayesian optimisation and STGCN is required. 
+
+The LSTM model is sensitive to missing values, consider the LSTM-M model \cite{TIAN2018297} to reduce its impact.
+
+A navigation algorithm based on the A* method will be implemented to show how the model can benefit daily lives. 

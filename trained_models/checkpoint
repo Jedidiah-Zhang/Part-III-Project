@@ -1,0 +1,2 @@
+model_checkpoint_path: "global_weights"
+all_model_checkpoint_paths: "global_weights"

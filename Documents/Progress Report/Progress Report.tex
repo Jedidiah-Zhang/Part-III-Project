@@ -1,0 +1,288 @@
+\documentclass[10pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{multicol} % multiple columns
+\usepackage{fancyhdr} % page number in bottom right
+\usepackage{graphicx} % images
+\usepackage{float} % float image in columns, gives [H]
+\usepackage{amsmath, amssymb} % maths symbols / environments
+\usepackage{times} % times font instead of computer modern
+\usepackage{IEEEtrantools} % et al referencing
+\usepackage{booktabs} % nice replacements for \hline in tables
+\usepackage{calc} % calculating textwidth-2cm etc.
+\usepackage[none]{hyphenat} % no hyphenation
+\usepackage{geometry} % Page Margins
+\usepackage{hyperref} % PDF metadata setup.
+\usepackage{mathptmx} % Use times font face for maths
+\usepackage{caption} % Tighter caption control.
+\usepackage{multirow}
+\usepackage{subfigure}
+\usepackage{bookmark}
+
+\usepackage{lipsum} % Temporary to generate body text
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE AND AUTHOR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This info is reused in places, so input it here and it will be updated globally.
+\newcommand{\docTitle}{Lab Four Report}
+\newcommand{\docAuthor}{Yanzhe Zhang}
+
+% Put the metadata in the PDF output.
+\hypersetup{
+    unicode=true,
+    pdftitle={\docTitle{}},
+    pdfauthor={\docAuthor{}}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FORMATTING REQUIREMENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\geometry{top=2.5cm, bottom=2.5cm, left=2cm, right=2cm}
+\linespread{1.05} % 1.05x line spacing.
+\setlength{\columnsep}{0.7cm} % 0.7cm column spacing.
+\setlength{\multicolsep}{0cm}
+\setlength{\parskip}{6pt} % 6pt skip between paragraphs
+\setlength{\parindent}{0pt}
+\newcommand{\figsquish}{\vspace{-5mm}} % Hack to fix poor figure spacing due to [H]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION REQUIREMENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{titlesec}
+\titlelabel{\thetitle.\hspace{0.5cm}} % Dot between number and title on sections.
+% Format is 10pt, so \large = 12pt, \normalsize=10pt
+\titleformat*{\section}{\large\bfseries}
+\titlespacing*{\section}{0cm}{4pt}{4pt} % 6pt from \parindent
+\titleformat*{\subsection}{\normalsize\bfseries}
+\titlespacing*{\subsection}{0cm}{0pt}{0pt} % 6pt from \parindent
+
+% Set up footer.
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{\thepage} % page number, bottom right of page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT BEGIN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Pull in the IEEE referencing setup stuff.
+\bstctlcite{IEEEexample:BSTcontrol}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{
+    \centering
+    % Use size 28 font. 1.05x gives 29.4pt line spacing.
+    \fontsize{28pt}{29.4pt} \selectfont
+    \docTitle\\
+    \vspace{25pt}
+    % Name block.
+    \fontsize{11pt}{11.55pt}\selectfont
+    \docAuthor\\
+    \fontsize{10pt}{10.5pt}\selectfont
+    \textit{yz25g21@soton.ac.uk} \\
+}
+\vspace{25pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{multicols*}{2}
+
+\section{Radial Basis Function (RBF)}
+
+Figure~\ref*{fig:normalize} shows the result after the input data are normalized to have a mean of 0 and standard deviation of 1.
+This is been done by appling: 
+
+\figsquish
+\begin{gather*}
+    X_{normalized} = \frac{X-\mathrm{mean} (X )}{\mathrm{std} (X)} 
+\end{gather*}
+
+The aim of normalization is to bring all features to a similar range, preventing one feature from dominating due to its larger scale. 
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{normalize.png}
+    \caption{Normalized input data}
+    \label{fig:normalize}
+\end{figure}
+
+If the selected pair of points happens to be close to each other, the basis functions may have a narrow range. This could result in a model that is too sensitive to local variations, might result in overfit of the training data,
+capturing noise and outliers. 
+Also, the basis function range based on a random pair of points might not be robust to changes in the dataset.
+Figure~\ref*{fig:sigma} shows the result after using the average of four pairs of data points instead of one pair. The randomness has been reduced. 
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{sigma.png}
+    \caption{Average of Four Pairwise Distances}
+    \label{fig:sigma}
+\end{figure}
+
+The use of K-means clustering is useful for the datasets which has some degree of clustering structure. Those centers can serve as the locations of the basis function, 
+this will ideally resulting a better performence. 
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{split.png}
+    \caption{Split the data into Training and Testing sets}
+    \label{fig:split}
+\end{figure}
+
+The performance for the test set is not good compare to the training set. This is a hint of overfiting. 
+This could cause by a significant difference in the distribution between the test set and the training set. 
+A cross validation is aim to minimize this. 
+
+
+The MSE of the test set results is plotted in figure~\ref*{fig:cross_validation}, compared with Linear Regression Models.
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{cross_validation.png}
+    \caption{ten-fold cross validation, linear regression}
+    \label{fig:cross_validation}
+\end{figure}
+
+\section{Multi-Layer Perceptron (MLP)}
+
+The two classification problem is generated as in figure~\ref*{fig:Classification}. 
+
+\figsquish
+\begin{figure}[H]
+	\centering
+	\subfigure[Easy to Learn]{
+	\begin{minipage}[H]{0.45\columnwidth}
+	\includegraphics[width=1\columnwidth]{easy_class.png}
+	\end{minipage}
+	\label{fig:easy_class}
+	}
+    \subfigure[Hard to Learn (20\% overlap)]{
+    \begin{minipage}[H]{0.45\columnwidth}
+    \includegraphics[width=1\columnwidth]{hard_class.png}
+    \end{minipage}
+	\label{fig:hard_class}
+    }
+	\caption{Classification}
+	\label{fig:Classification}
+\end{figure}
+
+MLP classifier with hidden\_layer\_sizes = (128, 64), max\_iter = 1000 is used to train the data. 
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Bayesian vs MLP.png}
+    \caption{Bayesian vs. MLP}
+    \label{fig:Bayesian vs MLP}
+\end{figure}
+
+The result of Bayesian classifier and MLP classifier shows that for the easy one, both of them have a good saperation. 
+However for the overlapped data, Bayesian is slightly better than MLP with given parameters. 
+
+Ten-fold cross validation was implemented for the MLP classifier. For the first paritition, Figure~\ref*{fig:boundaries} shows a comparesion of Gaussian classifier,
+a simple MLP and a complex MLP classifier. 
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{boundaries.png}
+    \caption{Boundaries of Gaussian; Simple MLP; MLP}
+    \label{fig:boundaries}
+\end{figure}
+
+The simple MLP uses only 5 hidden layers, is the worst one among three of them. As the number of hidden layer gets large, the performance gets better. 
+
+\figsquish
+\begin{table}[H]
+    \centering
+    \caption{Parameters of MLP}
+    \begin{tabular}{|c|c|}
+        \hline
+        Parameters & Role\\
+        \midrule
+        hidden\_layer\_sizes & number of neurons in each layer\\
+        activation & \{'identity', 'logistic', 'tanh', 'relu'\}\\
+        & the activation function used\\
+        solver & \{'lbfgs', 'sgd', 'adam'\}\\
+        & the solver for weight optimization \\
+        alpha & Strength of the L2 regularization term.\\
+        batch\_size & Size of minibatches for stochastic \\ & optimizers\\
+        learning\_rate & \{'constant', 'invscaling', 'adaptive'\}\\
+        learning\_rate\_init & The initial learning rate used. \\
+        power\_t & The exponent for inverse scaling \\ & learning rate\\
+        max\_iter & Maximum number of iterations.\\
+        shuffle & Whether to shuffle samples in \\ & each iteration.\\
+        random\_state & Determines random number generation \\ & for weights and bias initialization\\
+        tol & Tolerance for the optimization.\\
+        verbose & Whether to print progress \\ & messages to stdout.\\
+        momentum & Momentum for gradient descent update. \\
+        nesterovs\_momentum & Whether to use Nesterov's momentum. \\
+        early\_stopping & Whether use early stopping to terminate \\ & training as validation score isn't improving.\\
+        beta\_1 & Exponential decay rate for estimates\\ & of first moment vector in adam\\
+        beta\_2 & second moment vector in adam\\
+        epsilon & Value for numerical stability in adam\\
+        \hline
+    \end{tabular}
+    \label{tab:Parameters}
+\end{table}
+
+By altering the learning\_rate\_init, from default 0.001 to 0.1, The convergence decreases more rapidly, and the loss is smaller. 
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{lr_distr.png}
+    \caption{Boundaries change as lr changes}
+    \label{fig:lr_distr}
+\end{figure}
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{lr_conver.png}
+    \caption{Convergence as lr changes}
+    \label{fig:lr_conver}
+\end{figure}
+
+With changing the hidden\_layer\_sizes to (10, ), which means one layer with 10 neurons, the convergence decreases slower. It consumes more time to train the model, and the performance is not as good. 
+
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{hl_distr.png}
+    \caption{Boundaries change as hl changes}
+    \label{fig:hl_distr}
+\end{figure}
+
+\figsquish
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{hl_conver.png}
+    \caption{Convergence as hl changes}
+    \label{fig:hl_conver}
+\end{figure}
+
+\end{multicols*}
+
+\nocite{*}
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,mybib.bib}
+
+\end{document}
+

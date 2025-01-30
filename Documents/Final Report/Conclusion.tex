@@ -1,0 +1,49 @@
+%% ----------------------------------------------------------------
+%% Conclusion.tex
+%% ----------------------------------------------------------------
+\chapter{Conclusion \& Proposal} \label{Chapter:Conclusion}
+
+\section{Conclusion}
+
+Both localised and globalised designs showed their ability to predict future travel times based on historical data. 
+The localised one gives a more accurate prediction focusing on a single location, whereas the globalised design uses less time and computational power to predict a whole area. 
+
+The hyperparameter optimisation such as the batch size, and learning rate do affect the final performance of the model, but not as much as the input features and the overall structures of the model. 
+
+Both architectures were designed with high flexibility. 
+Adding or removing features will not break the models. In fact, choosing appropriate features would have a great boost in the performance of models. 
+Different cities and areas may have different information collected, features could be selected based on specific locations. 
+The performance could be enhanced by having a shorter time frame, which allows the model to learn the patterns of shorter periods of time. 
+The information on traffic lights, accidents, and the number of vehicles would be critical to include in the inputs to further improve the performance. 
+The target to predict is the travel time. However, no matter what value is given, including the average speed of vehicles, the number of vehicles on the road, etc., 
+the architectures are expected to work in the same way. 
+
+The prediction could be used as input to predict travel times in further future, however, this would give an increasingly worse prediction.
+
+\section{Project Management}
+
+It was a challenge to come up with a plan for this project at the start when every topic and section related to the project required study and further research. 
+Different architectures to be learnt, and libraries for codes to be familiar with.
+There was no good enough view of the big picture when stating the goals, and hence some of the goals and scopes have changed as progress. 
+Faults, misunderstandings, and better approaches come up while designing and training models and some of them require redoing the designs completely. 
+The plan has been reconsidered every time it happens.
+The Gantt chart is shown in \fref{Figure:gantt}. The expected and actual progress differ significantly as seen in the Gantt chart. 
+
+Some tasks are added to the project halfway through, and also tasks are abandoned. This was a risky move since it would change the plan for every task afterward. 
+The new designs added took longer time to optimise and train than expected, which led to insufficient time to make the pathfinding algorithm based on the outputs of the models. 
+It would be better if it is decided to stick with the plan, which will achieve the goals stated to a higher extent. 
+
+Jupyter notebook is used to code with, which enables to change parameters and alter structures without rerunning the whole process. 
+Git is used as version control. It makes backtracking easier. Different libraries were tried and different operating systems were prepared to ensure the platform of designing is working. 
+
+The project brief states the issue "Assuming that an accident has occurred at a certain location, is there a way to accurately anticipate the resulting traffic conditions on the adjacent roads?"
+However, due to the fact that a traffic dataset with information on accidents has not been found, there is no way that predictions are not able to reflect accidents. 
+
+\section{Future Work}
+
+\begin{itemize}
+    \item Another dataset could be used to train the model. This would give an indication of the universality of the architecture. The ones containing information about accidents and traffic lights are preferred, due to they could potentially enhance performance. 
+    \item The hyperparameters require a great deal of time and effort to optimise, tools such as Bayesian optimisation, grid search, etc. could be used to automate the optimisation process. 
+    \item Different lengths of the input and output sequences could be considered. The effect of amount of historical data given to the model would potentially affect the performance of the model. 
+    \item The structure of the input sequence could be optimised to include some features of the target time frames. Most of the features such as the date, time, and holidays are known values, and including them would result in a better performance. 
+\end{itemize}
