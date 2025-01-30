@@ -1,2 +1,6 @@
 /datasets/
 /handin/
+
+*.synctex.gz
+*.bbl
+*.aux
